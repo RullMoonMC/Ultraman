@@ -18,7 +18,7 @@ ${repo.open_issues} Issue${repo.description ? `
 *Clone:* \`\`\`$ git clone ${repo.clone_url}\`\`\`
 `.trim()
     }).join('\n\n')
-   conn.sendHydrated(m.chat, str,wm, null, ["github.com/FahriAdison"], ['Github Owner'], null,null,[null,null],m)
+   conn.sendHydrated(m.chat, str,wm, null, ["https://urlis.net/Moon"], ['Grub Bot'], null,null,[null,null],m)
 }
 handler.help = ['githubsearch'].map(v => v + ' <pencarian>')
 handler.tags = ['tools']
