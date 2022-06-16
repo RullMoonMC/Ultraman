@@ -137,7 +137,7 @@ function clockString(ms) {
 
 function wish() {
     let wishloc = ''
-  const time = moment.tz('Asia/Kolkata').format('HH')
+  const time = moment.tz('Asia/Jakarta').format('HH')
   wishloc = ('Hi')
   if (time >= 0) {
     wishloc = ('Night Rider')
