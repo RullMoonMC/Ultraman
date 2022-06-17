@@ -7,9 +7,9 @@ import moment from 'moment-timezone'
 
 let tags = {}
 const defaultMenu = {
-  before: `\n> Date: %date\n> Time: %time \n> Runtime: %uptime\n%readmore`,
-  header: '*❏═┅═━–〈 %category*',
-  body: '┊› %cmd %islimit %isPremium',
+  before: `\nꕤ Date: %date\nꕤ Time: %time \nꕤ Runtime: %uptime\n%readmore`,
+  header: '*⩩ %category*',
+  body: ' ࿈%cmd %islimit %isPremium \n',
   footer: '',
   after: '',
 }
@@ -96,7 +96,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 mediaType: 'VIDEO',
 mediaUrl: 'https://www.kibrispdr.org/dwn/7/yotsuba-nakano-wallpaper.jpg',
 title: 'M O O N   B O T',
-body: 'By R U L L',
+body: 'B y R U L L 👾',
 thumbnail: fs.readFileSync("./thumbnail.jpg"),
 sourceUrl: 'https://urlis.net/Moon'
 }
@@ -107,7 +107,7 @@ type: 'audioMessage',
 ptt: true 
 })
     // conn.sendButton(m.chat, 
-    //`*Hi, ${name} 👋*\n\n`, 
+    //`*Halo, ${name} 👋*\n\n`, 
   //  text.trim(), './media/marin.jpg', [
 // [`Speedtest`, `${_p}ping`],
 // [`Owner`, `${_p}owner`]
