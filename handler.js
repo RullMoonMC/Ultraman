@@ -731,99 +731,85 @@ export async function participantsUpdate({ id, participants, action }) {
                     try {
                         pp = await this.profilePictureUrl(user, 'image')
                         ppgc = await this.profilePictureUrl(id, 'image')
-                        } catch (e) {
-                        } finally {
-                            text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', await this.getName(id)).replace('@desc', groupMetadata.desc.toString()) :
-                                (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
-                            this.sendFile(id, pp, 'pp.jpg', text, null, false, { mentions: [user] })
-                        }
+                    } catch (e) {
+                    } finally {
+                        text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', await this.getName(id)).replace('@desc', groupMetadata.desc?.toString() || 'unknow') :
+                            (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', await this.getName(user))
+              let wel = await new knights.Welcome()
+                .setUsername(this.getName(user))
+                .setGuildName(groupMetadata.subject)
+                .setGuildIcon(ppgc)
+                .setMemberCount(groupMetadata.participants.length)
+                .setAvatar(pp)
+                .setBackground("https://telegra.ph/file/4b90043328ec4825c0e71.jpg")
+                .toAttachment()
+
+              let lea = await new knights.Goodbye()
+                .setUsername(this.getName(user))
+                .setGuildName(groupMetadata.subject)
+                .setGuildIcon(ppgc)
+                .setMemberCount(groupMetadata.participants.length)
+                .setAvatar(pp)
+                .setBackground("https://telegra.ph/file/4b90043328ec4825c0e71.jpg")
+                .toAttachment()
+                            
+                        // this.sendFile(id, action === 'add' ? wel : lea, pp, 'pp.jpg', text, null, false, { mentions: [user] })
+                       await this.sendHydrated(id, text, wm, action === 'add' ? wel.toBuffer() : lea.toBuffer(), sgc, (action == 'add' ? ' Welcome 👋' : 'Sayonaraa 👋'), user.split`@`[0], 'USER NUMBER', [
+      [null, null],
+      [null, null]
+    ], null, false, { mentions: [user] })
                     }
                 }
-                break
+            }
+        break
         case 'promote':
             text = (chat.sPromote || this.spromote || conn.spromote || '@user ```is now Admin```')
         case 'demote':
-            if (!text)
-                text = (chat.sDemote || this.sdemote || conn.sdemote || '@user ```is no longer Admin```')
+            if (!text) text = (chat.sDemote || this.sdemote || conn.sdemote || '@user ```is no longer Admin```')
             text = text.replace('@user', '@' + participants[0].split('@')[0])
-            if (chat.detect)
-                this.sendMessage(id, { text, mentions: this.parseMention(text) })
-            break
-        }
-    },
-    async delete(message) {
-        try {
-            const { fromMe, id, participant } = message
-            if (fromMe) return
-            let chats = Object.entries(conn.chats).find(([_, data]) => data.messages?.[id])
-            if (!chats) return
-            let msg = chats instanceof String ? JSON.parse(chats[1].messages[id]) : chats[1].messages[id]
-            let chat = global.db.data.chats[msg.key.remoteJid] || {}
-            if (chat.delete) return
-            await this.reply(msg.key.remoteJid, `
-Terdeteksi @${participant.split`@`[0]} telah menghapus pesan
-Untuk mematikan fitur ini, ketik
-*.enable delete*
-`.trim(), msg, {
-                mentions: [participant]
-            })
-            this.copyNForward(msg.key.remoteJid, msg).catch(e => console.log(e, msg))
-        } catch (e) {
-            console.error(e)
-        }
-    }
-},
-
-/*
-conn.ws.on('CB:call', async (json) => {
-    console.log(json.content)
-    const callerId = json.content[0].attrs['call-creator']
-    if (json.content[0].tag == 'offer') {
-    let pa7rick = await conn.sendContact(callerId, global.owner)
-    conn.sendMessage(callerId, { text: `Sistem otomatis block!\nJangan menelpon bot!\nSilahkan Hubungi Owner Untuk Dibuka !`}, { quoted : pa7rick })
-    await sleep(8000)
-    await conn.updateBlockStatus(callerId, "block")
-    }
-    })*/
-/*async onCall(json) {
-    let { from } = json[2][0][1]
-    let users = global.db.data.users
-    let user = users[from] || {}
-    if (user.whitelist) return
-    switch (this.callWhitelistMode) {
-      case 'mycontact':
-        if (from in this.contacts && 'short' in this.contacts[from])
-          return
+            if (chat.detect) this.sendMessage(id, { text, mentions: this.parseMention(text) })
         break
     }
-    await this.sendMessage(from, 'Maaf, karena anda menelfon bot. anda diblokir otomatis', MessageType.extendedText)
-    await this.updateBlockStatus(from, 'block')
-  }
-}*/
+}
+
+export async function deleteUpdate(message) {
+    try {
+        const { fromMe, id, participant } = message
+        if (fromMe) return
+        let msg = this.serializeM(this.loadMessage(id))
+        if (!msg) return
+        let chat = global.db.data.chats[msg.chat] || {}
+        if (!chat.antiDelete) return
+        await this.reply(msg.chat, `
+Detected @${participant.split`@`[0]} deleted message
+To turn off this feature, type
+*.enable delete*
+`.trim(), msg, { mentions: [participant] })
+        this.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
+    } catch (e) {
+        console.error(e)
+    }
+}
 
 global.dfail = (type, m, conn) => {
     let msg = {
-        rowner: 'Perintah ini hanya dapat digunakan oleh _*OWWNER!1!1!*_',
-        owner: 'Perintah ini hanya dapat digunakan oleh _*Owner Bot*_!',
-        mods: 'Perintah ini hanya dapat digunakan oleh _*Moderator*_ !',
-        premium: '*Premium*\n1 Months *IDR 10000*\n1 Years *IDR 90000*\n\nHubungi *owner* kami..', 
-        banned: 'Perintah ini hanya untuk pengguna yang terbanned..',
-        group: 'Perintah ini hanya dapat digunakan di grup!',
-        private: 'Perintah ini hanya dapat digunakan di Chat Pribadi!',
-        admin: 'Perintah ini hanya untuk *Admin* grup!',
-        botAdmin: 'Jadikan bot sebagai *Admin* untuk menggunakan perintah ini!',
+        rowner: 'This command can only be used by _*OWWNER!1!1!*_',
+        owner: 'This command can only be used by _*Owner Bot*_!',
+        mods: 'This command can only be used by _*Moderator*_ !',
+        premium: 'This command is only for _*Premium*_ members!',
+        group: 'This command can only be used in groups!',
+        private: 'This command can only be used in Private Chat!',
+        admin: 'This command is only for *Admin* group!',
+        botAdmin: 'Make bot as *Admin* to use this command!',
         unreg: 'Silahkan daftar untuk menggunakan fitur ini dengan cara mengetik:\n\n*#daftar nama.umur*\n\nContoh: *#daftar Manusia.16*',
-        restrict: 'Fitur ini di *disable*!'
+        restrict: 'This feature is *disabled*!'
     }[type]
-    if (msg) return m.reply(msg)
+    if (msg) return conn.reply(m.chat, msg, m, { contextInfo: { externalAdReply: {title: global.wm, body: '404 Access denied!', sourceUrl: sgc, thumbnail: fs.readFileSync('./thumbnail.jpg') }}})
 }
 
-let fs = require('fs')
-let chalk = require('chalk')
-let file = require.resolve(__filename)
-fs.watchFile(file, () => {
-    fs.unwatchFile(file)
+let file = global.__filename(import.meta.url, true)
+watchFile(file, async () => {
+    unwatchFile(file)
     console.log(chalk.redBright("Update 'handler.js'"))
-    delete require.cache[file]
-    if (global.reloadHandler) console.log(global.reloadHandler())
+    if (global.reloadHandler) console.log(await global.reloadHandler())
 })
