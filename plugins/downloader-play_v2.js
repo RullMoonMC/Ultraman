@@ -7,9 +7,9 @@ if (command == 'play.1') {
 conn.reply(m.chat, `*_⏳Wait,Audio Sedang Di Proses..._⏳*`, m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, 
 title: 'AUDIO',
-body: 'Sad-Bot',         
+body: 'MoonBot',         
 previewType: 0, thumbnail: fs.readFileSync("./thumbnail.jpg"),
-sourceUrl: `https://github.com/FahriAdison/Sad-Multi-Device`}}})
+sourceUrl: `https://urlis.net/Moon`}}})
 let res = await fetch("https://api.dhamzxploit.my.id/api/ytplaymp3?text="+text)
 let json = await res.json()
 conn.sendFile(m.chat, json.result.url, 'error.mp3', null, m, false, { mimetype: 'audio/mp4' })}
@@ -17,12 +17,12 @@ if (command == 'play.2') {
 conn.reply(m.chat, `*_⏳ Wait,Video Sedang Di Proses...⏳_*`, m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, 
 title: 'VIDEO',
-body: 'Sad-Bot',         
+body: 'MoonBot',         
 previewType: 0, thumbnail: fs.readFileSync("./thumbnail.jpg"),
-sourceUrl: `https://github.com/FahriAdison/Sad-Multi-Device`}}})
+sourceUrl: `https://urlis.net/Moon`}}})
 let res = await fetch("https://api.dhamzxploit.my.id/api/ytplaymp4?text="+text)
 let json = await res.json()
-conn.sendFile(m.chat, json.result.url, 'error.mp4', `_Sad-Bot_`, m)}
+conn.sendFile(m.chat, json.result.url, 'error.mp4', `_MoonBot_`, m)}
 }catch(e){
 m.reply('*[❗INFO❗] ERROR,TIDAK DAPAT MENCARI LAGU TERSEBUT*')
 console.log(e)
