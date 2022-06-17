@@ -55,7 +55,7 @@ global.thumbnailUrl = [
   'https://telegra.ph/file/5f1d14d1e42a7fec7bf6f.jpg', 'https://telegra.ph/file/c4bf7c7b044ab2246a54b.jpg'
 ]
 
-global.sgc = 'https://chat.whatsapp.com/HFdZ0islM3x5Y7eQpUQVU8'
+global.sgc = 'https://urlis.net/Moon'
 global.sig = 'https://instagram.com/bot_whangsaf'
 
 //Ini cuma simpenan owner kanna kok :v
