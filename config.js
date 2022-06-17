@@ -52,7 +52,7 @@ global.titlebot = ` 𑁍 Time Sever : ${moment.tz('Asia/Jakarta').format('HH:mm:
 global.author = '                「 ✦ ⬪ MoonBot ⬪ ⁩✦ 」'
 
 global.thumbnailUrl = [
-  'https://tinyurl.com/2d9cwycf', 'https://tinyurl.com/2d9cwycf'
+  'https://telegra.ph/file/013319df928df4e9953b9.jpg', 'https://telegra.ph/file/cfd3aa9ed22c782b0c4bf.jpg'
 ]
 
 global.sgc = 'https://urlis.net/Moon'
