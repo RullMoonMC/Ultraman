@@ -433,12 +433,12 @@ esteh: 0,
             if (typeof settings !== 'object') global.db.data.settings[this.user.jid] = {}
             if (settings) {
                 if (!('self' in settings)) settings.self = false
-                if (!('autoread' in settings)) settings.autoread = false
-                if (!('restrict' in settings)) settings.restrict = false
+                if (!('autoread' in settings)) settings.autoread = true
+                if (!('restrict' in settings)) settings.restrict = true
             } else global.db.data.settings[this.user.jid] = {
                 self: false,
-                autoread: false,
-                restrict: false
+                autoread: true,
+                restrict: true,
             }
         } catch (e) {
             console.error(e)
@@ -754,7 +754,7 @@ export async function participantsUpdate({ id, participants, action }) {
                 .toAttachment()
                             
                         // this.sendFile(id, action === 'add' ? wel : lea, pp, 'pp.jpg', text, null, false, { mentions: [user] })
-                       await this.sendHydrated(id, text, wm, action === 'add' ? wel.toBuffer() : lea.toBuffer(), sgc, (action == 'add' ? ' Welcome 👋' : 'Sayonaraa 👋'), user.split`@`[0], 'USER NUMBER', [
+                       await this.sendHydrated(id, text, wm, action === 'add' ? wel.toBuffer() : lea.toBuffer(), sgc, (action == 'add' ? ' Selamat Datang 👋' : 'Selamat Tinggal 👋'), user.split`@`[0], 'USER NUMBER', [
       [null, null],
       [null, null]
     ], null, false, { mentions: [user] })
@@ -763,9 +763,9 @@ export async function participantsUpdate({ id, participants, action }) {
             }
         break
         case 'promote':
-            text = (chat.sPromote || this.spromote || conn.spromote || '@user ```is now Admin```')
+            text = (chat.sPromote || this.spromote || conn.spromote || '@user ```Sekarang Menjadi Admin🎀```')
         case 'demote':
-            if (!text) text = (chat.sDemote || this.sdemote || conn.sdemote || '@user ```is no longer Admin```')
+            if (!text) text = (chat.sDemote || this.sdemote || conn.sdemote || '@user ```Sekarang Bukan Admin Grub```')
             text = text.replace('@user', '@' + participants[0].split('@')[0])
             if (chat.detect) this.sendMessage(id, { text, mentions: this.parseMention(text) })
         break
@@ -793,18 +793,18 @@ To turn off this feature, type
 
 global.dfail = (type, m, conn) => {
     let msg = {
-        rowner: 'This command can only be used by _*OWWNER!1!1!*_',
-        owner: 'This command can only be used by _*Owner Bot*_!',
-        mods: 'This command can only be used by _*Moderator*_ !',
-        premium: 'This command is only for _*Premium*_ members!',
-        group: 'This command can only be used in groups!',
-        private: 'This command can only be used in Private Chat!',
-        admin: 'This command is only for *Admin* group!',
-        botAdmin: 'Make bot as *Admin* to use this command!',
-        unreg: 'Silahkan daftar untuk menggunakan fitur ini dengan cara mengetik:\n\n*#daftar nama.umur*\n\nContoh: *#daftar Manusia.16*',
-        restrict: 'This feature is *disabled*!'
+        rowner: 'Hanya Dapat Digunakan Oleh _*Owner Bot!*_',
+        owner: '⭐ Hanya Dapat Dihunakan Oleh _*Owner Bot*_!',
+        mods: '📌 Fitur Ini Hanya Dapat Digunakan Oleh _*Moderator*_ !',
+        premium: '🎀Fitur Ini Hanya Untuk Member _*Premium*_!',
+        group: '⚠️Hanya Dapat Di Gunakan Di Grub!',
+        private: '⚠️Hanya Dapat Di Gunakan Di Private Chat!',
+        admin: '⚠️Fitur ini hanya untuk admin grub!',
+        botAdmin: '⚠️Jadikan Bot Admin :<!',
+        unreg: '👾 Silahkan daftar untuk menggunakan fitur ini dengan cara mengetik:\n\n*#daftar nama.umur*\n\nContoh: *#daftar Manusia.16*',
+        restrict: 'Restrict Belum Diaktifkan Owner Bot!'
     }[type]
-    if (msg) return conn.reply(m.chat, msg, m, { contextInfo: { externalAdReply: {title: global.wm, body: '404 Access denied!', sourceUrl: sgc, thumbnail: fs.readFileSync('./thumbnail.jpg') }}})
+    if (msg) return conn.reply(m.chat, msg, m, { contextInfo: { externalAdReply: {title: global.wm, body: '👾 Gaada Akses Fitur :v!', sourceUrl: sgc, thumbnail: fs.readFileSync('./thumbnail.jpg') }}})
 }
 
 let file = global.__filename(import.meta.url, true)
