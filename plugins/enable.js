@@ -29,8 +29,8 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
 const listMessage = {
   text: ' ',
   footer: botdate,
-  title: `*––––––『 OPTIONS 』––––––*`,
-  buttonText: "Click Here!",
+  title: `*––––––『 Opsi👾 』––––––*`,
+  buttonText: "Pilih Disini!",
   sections
 }
 
@@ -224,9 +224,9 @@ const listMessage = {
       if (!/[01]/.test(command)) return await conn.sendMessage(m.chat, listMessage)
       throw false
   }
-  conn.sendButton(m.chat, `*––––––『 OPTIONS 』––––––*
-🗂️ *Type:* ${type} 
-📊 *Status:* Succes ✅
+  conn.sendButton(m.chat, `*––––––『 Opsi👾 』––––––*
+🌙 *Type:* ${type} 
+📊 *Status:* Sukses ✅
 🎚️ *Options:* ${isEnable ? 'Enable' : 'Disable'}
 📣 *For:* ${isAll ? 'This Bot' : isUser ? '' : 'This Chats'}
 `,wm, null, [[`${isEnable ? '✖️ Disable' : '✔️ Enable'}`, `${isEnable ? `.off ${type}` : `.on ${type}`}`], ['🎀 Menu', '.menu']],m)
